@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from numbers import Real
 from typing import Union
 
@@ -53,12 +54,6 @@ class Distance:
         if value == 0:
             raise ZeroDivisionError("division by zero")
         return Distance(round(self.km / value, 2))
-
-    def __lt__(self, other: object) -> bool:
-        km = self._as_km(other)
-        if km is NotImplemented:
-            return NotImplemented
-        return bool(self.km < km)
 
     def __lt__(self, other: object) -> bool:
         km = self._as_km(other)
