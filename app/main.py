@@ -69,3 +69,4 @@ class Distance:
     def __eq__(self, other: object) -> bool:
         km = self._as_km(other)
         if km is NotImplemented:
+    return NotImplemented
