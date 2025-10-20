@@ -1,5 +1,6 @@
 from __future__ import annotations
 from numbers import Real
+from typing import Union
 
 
 class Distance:
@@ -14,38 +15,38 @@ class Distance:
         return f"Distance(km={km_value})"
 
     @staticmethod
-    def _as_km(other: object) -> float | NotImplemented:
+    def _as_km(other: object) -> Union[float, NotImplemented]:
         if isinstance(other, Distance):
             return other.km
         if isinstance(other, Real):
             return float(other)
         return NotImplemented
 
-    def __add__(self, other: object) -> Distance:
+    def __add__(self, other: object) -> "Distance":
         km = self._as_km(other)
         if km is NotImplemented:
             return NotImplemented
         return Distance(self.km + km)
 
-    def __radd__(self, other: object) -> Distance:
+    def __radd__(self, other: object) -> "Distance":
         return self.__add__(other)
 
-    def __iadd__(self, other: object) -> Distance:
+    def __iadd__(self, other: object) -> "Distance":
         km = self._as_km(other)
         if km is NotImplemented:
             return NotImplemented
         self.km += km
         return self
 
-    def __mul__(self, other: object) -> Distance:
+    def __mul__(self, other: object) -> "Distance":
         if not isinstance(other, Real):
             return NotImplemented
         return Distance(self.km * float(other))
 
-    def __rmul__(self, other: object) -> Distance:
+    def __rmul__(self, other: object) -> "Distance":
         return self.__mul__(other)
 
-    def __truediv__(self, other: object) -> Distance:
+    def __truediv__(self, other: object) -> "Distance":
         if not isinstance(other, Real):
             return NotImplemented
         value = float(other)
@@ -57,9 +58,14 @@ class Distance:
         km = self._as_km(other)
         if km is NotImplemented:
             return NotImplemented
-        return self.km < km
+        return bool(self.km < km)
 
     def __gt__(self, other: object) -> bool:
         km = self._as_km(other)
         if km is NotImplemented:
-            return
+            return NotImplemented
+        return bool(self.km > km)
+
+    def __eq__(self, other: object) -> bool:
+        km = self._as_km(other)
+        if km is NotImplemented:
