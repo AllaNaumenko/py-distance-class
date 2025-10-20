@@ -60,6 +60,12 @@ class Distance:
             return NotImplemented
         return bool(self.km < km)
 
+    def __lt__(self, other: object) -> bool:
+        km = self._as_km(other)
+        if km is NotImplemented:
+            return NotImplemented
+        return bool(self.km < km)
+
     def __gt__(self, other: object) -> bool:
         km = self._as_km(other)
         if km is NotImplemented:
@@ -69,4 +75,17 @@ class Distance:
     def __eq__(self, other: object) -> bool:
         km = self._as_km(other)
         if km is NotImplemented:
-    return NotImplemented
+            return False
+        return bool(self.km == km)
+
+    def __le__(self, other: object) -> bool:
+        km = self._as_km(other)
+        if km is NotImplemented:
+            return NotImplemented
+        return bool(self.km <= km)
+
+    def __ge__(self, other: object) -> bool:
+        km = self._as_km(other)
+        if km is NotImplemented:
+            return NotImplemented
+        return bool(self.km >= km)
